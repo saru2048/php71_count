@@ -1,0 +1,17 @@
+{
+    "name": "php71_count/php71_count",
+    "description": "provides php71 like count() function on php72 or above",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "files": [
+            "src/Php71count/php71_count.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}
