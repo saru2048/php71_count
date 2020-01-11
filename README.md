@@ -5,6 +5,12 @@
 
 - PHP 7.2 or above
 
+## installation
+
+```bash
+$ composer require php71_count/php71_count
+```
+
 ## Basic Usage
 
 
