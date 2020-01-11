@@ -6,6 +6,12 @@
     "require": {
         "php": "^7.2"
     },
+    "authors": [
+        {
+            "name": "Satoru Nagai",
+            "email": "aluminum2024@gmail.com"
+        }
+    ],
     "autoload": {
         "files": [
             "src/Php71count/php71_count.php"
