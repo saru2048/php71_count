@@ -41,7 +41,7 @@ if (php71_conunt($value)) {
 index.php or something like Bootstrap.php
 
 ```php
-
+<?php
 declare (strict_types=1);
 
 use function Php71count\php71_count;
@@ -66,5 +66,3 @@ replace older app code
 ### Author
 
 Satoru Nagai - <aluminum2024@gmail.com>
-
-

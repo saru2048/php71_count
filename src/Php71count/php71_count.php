@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace Php71count;
 
+
 /**
  * @see https://github.com/php/php-src/commit/bfc10978eff5793a68e7aeb6144b5a2a393833f3
  */
@@ -12,7 +13,7 @@ if (!function_exists('is_countable')) {
      * @return bool
      */
     function is_countable($var): bool { 
-        return (is_array($var) || $var instanceof Countable);
+        return (is_array($var) || $var instanceof \Countable);
     }
 }
 
