@@ -8,7 +8,7 @@ namespace Php71count;
  */
 if (!function_exists('is_countable')) {
     /**
-     * @var mixed $var
+     * @param mixed $var
      * @return bool
      */
     function is_countable($var): bool { 
@@ -19,12 +19,13 @@ if (!function_exists('is_countable')) {
 /**
  * avoid warning error on php7.2 or heigher runtime environment
  * 
- * @var mixed $value
+ * @param mixed $value int|float|string|null|bool|Object|callable
+ * @param int $mode optional COUNT_NORMAL, COUNT_RECURSIVE
  * @return int
  */
-function php71_count($value): int {
+function php71_count($value, int $mode = \COUNT_NORMAL): int {
     if (is_countable($value)) {
-        return count($value);
+        return count($value, $mode);
     }
 
     if (null === $value) {

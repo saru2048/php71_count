@@ -8,11 +8,17 @@ use function Php71count\php71_count;
 
 class Php71CountTest extends TestCase
 {
-    protected function phpNativeCount($value): int
+    /**
+     * 
+     * @param mixed $value
+     * @param int $mode optional COUNT_NORMAL, COUNT_RECURSIVE
+     * @return int
+     */
+    protected function phpNativeCount($value, int $mode = \COUNT_NORMAL): int
     {
         $errorReporting = error_reporting();
         error_reporting(0);
-        $nativeResult = count($value);
+        $nativeResult = count($value, $mode);
         error_reporting($errorReporting);
 
         return $nativeResult;
@@ -24,8 +30,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($nullVar);
         $altResult = php71_count($nullVar);
-
         $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($nullVar, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($nullVar, \COUNT_RECURSIVE);        
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
     public function testInt()
@@ -34,8 +43,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($intVar);
         $altResult = php71_count($intVar);
-
         $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($intVar, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($intVar, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
     public function testBoolFalse()
@@ -44,8 +56,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
-        $this->assertSame($nativeResult, $altResult); 
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
     public function testBoolTrue()
@@ -54,8 +69,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
-        $this->assertSame($nativeResult, $altResult); 
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
 
@@ -65,8 +83,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
         $this->assertSame($nativeResult, $altResult); 
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
     public function testEmptyArray()
@@ -75,8 +96,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
-        $this->assertSame($nativeResult, $altResult); 
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
 
@@ -88,8 +112,27 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
-        $this->assertSame($nativeResult, $altResult); 
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
+    }
+    
+    public function testStdRecursiveClass()
+    {
+        $value = new \stdClass();
+        $value->foo = 1;
+        $value->bar = new \ArrayObject([1, 256, 65536, $value]);
+        
+        $nativeResult = $this->phpNativeCount($value);
+        $altResult = php71_count($value);
+        $this->assertSame($nativeResult, $altResult);
+        
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
     public function testCountableClass()
@@ -98,8 +141,11 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
-        $this->assertSame($nativeResult, $altResult); 
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 
     public function testCallable()
@@ -108,7 +154,37 @@ class Php71CountTest extends TestCase
         
         $nativeResult = $this->phpNativeCount($value);
         $altResult = php71_count($value);
-
-        $this->assertSame($nativeResult, $altResult); 
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
+    }
+    
+    public function testString()
+    {
+        $value = 'the quick brown fox jumps over the lazy dog.';
+        
+        $nativeResult = $this->phpNativeCount($value);
+        $altResult = php71_count($value);
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
+    }
+    
+    
+    public function testFloat()
+    {
+        $value = 3.1415926535;
+        
+        $nativeResult = $this->phpNativeCount($value);
+        $altResult = php71_count($value);
+        $this->assertSame($nativeResult, $altResult);
+        
+        $nativeRecursiveResult = $this->phpNativeCount($value, \COUNT_RECURSIVE);
+        $altRecursiveResult = php71_count($value, \COUNT_RECURSIVE);
+        $this->assertSame($nativeRecursiveResult, $altRecursiveResult);
     }
 }
