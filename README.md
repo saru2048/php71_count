@@ -31,7 +31,7 @@ if (count($value)) {
 }
 
 //without Warning
-if (php71_conunt($value)) {
+if (php71_count($value)) {
 // ..do something
 }
 ```
